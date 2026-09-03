@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @page {
+      size: a4 portrait;
+      margin: 1.5cm 1.5cm 1.5cm 1.5cm;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      color: #1e293b;
+      font-size: 10pt;
+      line-height: 1.4;
+    }
+
+    .header-table {
+      width: 100%;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #0284c7;
+      padding-bottom: 8px;
+    }
+
+    .logo-box {
+      background-color: #0f172a;
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 12pt;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .main-title {
+      font-size: 15pt;
+      font-weight: bold;
+      color: #0f172a;
+      text-transform: uppercase;
+      text-align: center;
+      margin: 0;
+    }
+
+    .sub-title {
+      font-size: 8pt;
+      color: #64748b;
+      text-transform: uppercase;
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    .meta-badge {
+      background-color: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 6px;
+      font-size: 8.5pt;
+    }
+
+    .info-table {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      margin-bottom: 15px;
+      background-color: #f8fafc;
+    }
+
+    .info-table td {
+      padding: 5px 8px;
+      font-size: 9pt;
+      border: 1px solid #e2e8f0;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #334155;
+      background-color: #f1f5f9;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      font-size: 10.5pt;
+      font-weight: bold;
+      color: #0369a1;
+      text-transform: uppercase;
+      border-bottom: 1px solid #bae6fd;
+      padding-bottom: 3px;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+
+    .content-p {
+      font-size: 9pt;
+      color: #334155;
+      text-align: justify;
+      margin-bottom: 10px;
+    }
+
+    .image-table {
+      width: 100%;
+      margin-top: 8px;
+      margin-bottom: 12px;
+    }
+
+    .image-cell {
+      width: 50%;
+      text-align: center;
+      vertical-align: top;
+      padding: 4px;
+      border: 1px solid #e2e8f0;
+      background-color: #f8fafc;
+    }
+
+    .img-caption {
+      font-size: 8pt;
+      font-weight: bold;
+      color: #475569;
+      margin-top: 4px;
+    }
+
+    .signatures-table {
+      width: 100%;
+      margin-top: 40px;
+    }
+
+    .sign-col {
+      width: 45%;
+      text-align: center;
+      vertical-align: bottom;
+    }
+
+    .sign-line {
+      border-top: 1px solid #94a3b8;
+      padding-top: 5px;
+    }
+
+    .sign-name {
+      font-size: 9pt;
+      font-weight: bold;
+      color: #0f172a;
+    }
+
+    .sign-role {
+      font-size: 8pt;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Encabezado -->
+  <table class="header-table">
+    <tr>
+      <td style="width: 25%;">
+        <div class="logo-box">SERVICIO TÉCNICO</div>
+      </td>
+      <td style="width: 50%; text-align: center;">
+        <div class="main-title">Informe de Visita Técnica</div>
+        <div class="sub-title">Reporte Operativo y Diagnóstico en Sitio</div>
+      </td>
+      <td style="width: 25%; text-align: right;">
+        <div class="meta-badge">
+          <div><strong>Informe N°:</strong> {{ numero }}</div>
+          <div><strong>Fecha:</strong> {{ fecha_emision }}</div>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <!-- Ficha Datos -->
+  <table class="info-table" cellpadding="4" cellspacing="0">
+    <tr>
+      <td style="width: 18%;" class="label">Cliente:</td>
+      <td style="width: 42%;"><strong>{{ cliente }}</strong></td>
+      <td style="width: 18%;" class="label">Fecha Visita:</td>
+      <td style="width: 22%;">{{ fecha_visita }}</td>
+    </tr>
+    <tr>
+      <td class="label">RUC:</td>
+      <td>{{ ruc }}</td>
+      <td class="label">Técnico Resp.:</td>
+      <td>{{ tecnico }}</td>
+    </tr>
+    <tr>
+      <td class="label">Dirección:</td>
+      <td>{{ direccion }}</td>
+      <td class="label">Área Visita:</td>
+      <td><strong>{{ area_visita }}</strong></td>
+    </tr>
+  </table>
+
+  <!-- Sección 1 -->
+  <div class="section-title">1. Introducción y Diagnóstico Inicial</div>
+  <div class="content-p">{{ introduccion }}</div>
+
+  <!-- Sección 2 -->
+  <div class="section-title">2. Solución y Acciones Ejecutadas</div>
+  <div class="content-p">{{ solucion }}</div>
+
+  <!-- Galería Fotográfica -->
+  {% if foto1_base64 or foto2_base64 %}
+  <table class="image-table" cellpadding="0" cellspacing="6">
+    <tr>
+      {% if foto1_base64 %}
+      <td class="image-cell">
+        <img src="data:image/jpeg;base64,{{ foto1_base64 }}" width="240" height="150">
+        <div class="img-caption">{{ caption1 }}</div>
+      </td>
+      {% endif %}
+      {% if foto2_base64 %}
+      <td class="image-cell">
+        <img src="data:image/jpeg;base64,{{ foto2_base64 }}" width="240" height="150">
+        <div class="img-caption">{{ caption2 }}</div>
+      </td>
+      {% endif %}
+    </tr>
+  </table>
+  {% endif %}
+
+  <!-- Sección 3 -->
+  <div class="section-title">3. Propuesta Final y Recomendaciones</div>
+  <div class="content-p">{{ propuesta }}</div>
+
+  <!-- Firmas -->
+  <table class="signatures-table" cellpadding="0" cellspacing="0">
+    <tr>
+      <td class="sign-col">
+        <div class="sign-line">
+          <div class="sign-name">{{ tecnico }}</div>
+          <div class="sign-role">Especialista Técnico Responsable</div>
+        </div>
+      </td>
+      <td style="width: 10%;"></td>
+      <td class="sign-col">
+        <div class="sign-line">
+          <div class="sign-name">{{ supervisor }}</div>
+          <div class="sign-role">Recepción y Conformidad / Cliente</div>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
